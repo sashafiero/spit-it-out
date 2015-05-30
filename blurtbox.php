@@ -9,17 +9,6 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 
 
-// Right now, this just blurts out the current template file name.
-// I'd love to have an admin for the plugin to checkbox what to blurt
-// like template file name
-// page title
-// ????
-// if/when you get these as options, will need to do an "activate" thingie
-// and a "delete" thingie to set defaults, and to remove settings from database, respectively
-
-
-
-
 /////////////////////////////////////////////////////////////////////
 // load in js
 function blurtbox_scripts_important() {
@@ -147,7 +136,7 @@ function blurtbox_options() {
 			'init' => '0'
 			),
 		array(
-			'description' => 'Last Error that Occurred',
+			'description' => 'Last Error that Occurred', // error_get_last() - returns an array
 			'db_name' => 'error',
 			'init' => '0'
 			)
