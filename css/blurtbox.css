@@ -1,0 +1,20 @@
+.blurtbox {
+	position: fixed;
+	top: 60px;
+	left: 10px;
+	right: 10px;
+	bottom: 200px;
+	background-color: rgba(255,255,255,0.70);
+	padding: 20px;
+	color: black;
+	overflow: auto;
+	z-index: 900001;
+	box-shadow: 3px 3px 10px 0 rgba(0,0,0,.75);
+	}
+.closeblurtbox {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: red;
+	cursor: pointer;
+	}
