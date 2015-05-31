@@ -2,7 +2,7 @@
 /*
 Plugin Name: Blurtbox
 Description: For logged in admin users, displays a box at the top left with various information about the theme page
-Version:	 0.1
+Version:	 1.0
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
