@@ -1,6 +1,6 @@
 Plugin Name: Blurtbox
 Description: For logged in admin users, displays a dismissable box at the top left with various information that may be helpful for developers.
-Version:     0.1
+Version:     1.0
 
 
 
