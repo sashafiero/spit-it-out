@@ -16,6 +16,7 @@ And which bits of information you would like displayed in the blurtbox.
 • $_FILES
 • $_SESSION
 • The last error that occurred
+• $wpdb->queries if it exists
 
 In the future, I would like to provide options for the following items.
 
