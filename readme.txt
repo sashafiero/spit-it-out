@@ -1,14 +1,14 @@
-Plugin Name: Blurtbox
+Plugin Name: Spit It Out
 Description: For logged in admin users, displays a dismissable box at the top left with various information that may be helpful for developers.
 Version:     1.0
 
 
 
-This provides logged in wordpress admin users a new submenu in Settings for "Blurtbox".
+This provides logged in wordpress admin users a new submenu in Settings for "Spit It Out".
 
-• Whether Blurtbox is active
+• Whether Spit It Out is active
 
-And which bits of information you would like displayed in the blurtbox.
+And which bits of information you would like displayed in the box.
 • Current template file name
 • Current query
 • $_SERVER
