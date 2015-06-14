@@ -1,11 +1,34 @@
 <?php
 /*
 Plugin Name: Spit It Out
-Description: For logged in admin users, displays a box at the top left with various information about the theme page
+Description: Provides different ways to display various developer-useful information about the theme page
 Version:	 1.0
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
+/*
+The original behavior of this plugin is to show a box overlaid on top of everything
+with various bits of information that could be useful for developers.
+This displays only for logged in WP admin users.
+
+The WP admin can choose in the settings what bits of information to display
+(as well as whether or not to show it at all)
+
+
+There is a shortcode for use in WYSIWYG content
+The option is to display if user is not a logged in admin; default to show only if admin.
+[spit-it-out adminonly="true"] or "false"
+
+
+There is a function for use in templates.
+If you call it with show_spitio(false)
+it will show the stuff even if the viewer is not a logged in admin
+show_spitio($adminonly = true)
+
+*/
+
+
 
 // the options we want to offer
 // they will be stored in the database as an array under 'spititout' in the options table
@@ -112,17 +135,12 @@ add_filter( 'template_include', 'spitio_var_template_include', 1000 );
 function spitio_var_template_include( $t ){
 	$GLOBALS['spitio_current_theme_template'] = basename($t);
 	return $t;
-}
-
-// this function was originally just added to a custom template, so I gave it the option of either returning or echoing the results
-function spitio_get_current_template( $echo = false ) {
+	}
+function spitio_get_current_template() {
 	if( !isset( $GLOBALS['spitio_current_theme_template'] ) )
 		return false;
-	if( $echo )
-		echo $GLOBALS['spitio_current_theme_template'];
-	else
-		return $GLOBALS['spitio_current_theme_template'];
-}
+	return $GLOBALS['spitio_current_theme_template'];
+	}
 
 
 
@@ -139,38 +157,44 @@ function spitio_prettify($thingie) {
 
 
 /////////////////////////////////////////////////////////////////////
-// this is a separate function, so it can be used both in the plugin's normal box,
+// this is a separate function, so it can be used in the plugin's normal overlay box,
 // or in a shortcode or template tag
 function show_spitio_content($spitiooptions){
+	ob_start();
+	echo '<h3>Developer Information</h3>'.PHP_EOL;
 	if ($spitiooptions['templatefile'] === '1') {
-		$showme .= '<hr /><p><b>Current Template File</b>: '.spitio_get_current_template().'</p>'.PHP_EOL;
+		echo '<hr /><p><b>Current Template File</b>: '.spitio_get_current_template().'</p>'.PHP_EOL;
 		}
 
 	if ($spitiooptions['currentquery'] === '1') {
-		$showme .= '<hr /><p><b>Current Query</b>:</p>'.spitio_prettify(get_queried_object()).PHP_EOL;
+		echo '<hr /><p><b>Current Query</b>:</p>'.spitio_prettify(get_queried_object()).PHP_EOL;
 		}
 
 	if ($spitiooptions['server'] === '1') {
-		$showme .= '<hr /><p><b>$_SERVER</b>:</p>'.spitio_prettify($_SERVER).PHP_EOL;
+		echo '<hr /><p><b>$_SERVER</b>:</p>'.spitio_prettify($_SERVER).PHP_EOL;
 		}
 
 	if ($spitiooptions['request'] === '1') {
-		$showme .= '<hr /><p><b>$_REQUEST</b>:</p>'.spitio_prettify($_REQUEST).PHP_EOL;
+		echo '<hr /><p><b>$_REQUEST</b>:</p>'.spitio_prettify($_REQUEST).PHP_EOL;
 		}
 
 	if ($spitiooptions['files'] === '1') {
-		$showme .= '<hr /><p><b>$_FILES</b>:</p>'.spitio_prettify($_FILES).PHP_EOL;
+		echo '<hr /><p><b>$_FILES</b>:</p>'.spitio_prettify($_FILES).PHP_EOL;
 		}
 
 	if ($spitiooptions['session'] === '1') {
-		$showme .= '<hr /><p><b>$_SESSION</b>:</p>'.spitio_prettify($_SESSION).PHP_EOL;
+		echo '<hr /><p><b>$_SESSION</b>:</p>'.spitio_prettify($_SESSION).PHP_EOL;
 		}
 
 	if ($spitiooptions['error'] === '1') {
-		$showme .= '<hr /><p><b>Last Error that Occurred - error_get_last()</b>:</p>'.spitio_prettify(error_get_last()).PHP_EOL;
+		echo '<hr /><p><b>Last Error that Occurred - error_get_last()</b>:</p>'.spitio_prettify(error_get_last()).PHP_EOL;
 		}
-	return $showme;
+	return ob_get_clean();
 	}
+
+
+
+
 
 
 /////////////////////////////////////////////////////////////////////
@@ -181,7 +205,7 @@ function spitio_wp_foot(){
 
 	if(is_super_admin() && ($spitiooptions['active'] === '1')){
 
-		echo '<div class="spitio_box">'.PHP_EOL.'<h3>Developer Information</h3>'.PHP_EOL;
+		echo '<div class="spitio_box">'.PHP_EOL;
 		echo show_spitio_content($spitiooptions);
 		echo '</div>';
 		}
@@ -193,24 +217,37 @@ function spitio_wp_foot(){
 
 
 /////////////////////////////////////////////////////////////////////
+// function for use in templates. if you call it with show_spitio(false)
+// it will show the stuff even if the viewer is not a logged in admin
+function show_spitio($adminonly = true) {
+	$spitiooptions = get_option('spititout');
+	if(is_super_admin() || $adminonly === false){
+		echo show_spitio_content($spitiooptions);
+		}
+	}
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////
 // shortcode for use in WYSIWYG content for displaying Spit It Out stuff
 // option to display if user is not a logged in admin; default to show only if admin.
-function spit_it_out($atts) {
+// [spit-it-out adminonly="true"] or "false"
+function spit_it_out($atts, $content = null) {
 	$options = shortcode_atts( array(
-		'admin-only' => true
+		'adminonly' => 'true'
 		), $atts);
 
 	$spitiooptions = get_option('spititout');
 
 	if(is_super_admin() || // if the viewer is an admin... OR
-	!$options['admin-only']) { // if "admin-only" is false
+	($options['adminonly'] === 'false')) { // if "admin-only" is false
 		return show_spitio_content($spitiooptions);
 		}
-
-
-
+	return false;
 	}
-add_shortcode('spit-it-out', 'spit_it_out');
+add_shortcode('spititout', 'spit_it_out');
 
 
 
