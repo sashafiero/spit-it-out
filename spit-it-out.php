@@ -143,32 +143,33 @@ function spitio_prettify($thingie) {
 // or in a shortcode or template tag
 function show_spitio_content($spitiooptions){
 	if ($spitiooptions['templatefile'] === '1') {
-		echo '<hr /><p><b>Current Template File</b>: '.spitio_get_current_template().'</p>'.PHP_EOL;
+		$showme .= '<hr /><p><b>Current Template File</b>: '.spitio_get_current_template().'</p>'.PHP_EOL;
 		}
 
 	if ($spitiooptions['currentquery'] === '1') {
-		echo '<hr /><p><b>Current Query</b>:<br />'.spitio_prettify(get_queried_object()).'<p>'.PHP_EOL;
+		$showme .= '<hr /><p><b>Current Query</b>:</p>'.spitio_prettify(get_queried_object()).PHP_EOL;
 		}
 
 	if ($spitiooptions['server'] === '1') {
-		echo '<hr /><p><b>$_SERVER</b>:<br />'.spitio_prettify($_SERVER).'</p>'.PHP_EOL;
+		$showme .= '<hr /><p><b>$_SERVER</b>:</p>'.spitio_prettify($_SERVER).PHP_EOL;
 		}
 
-	if ($spitio_options['request'] === '1') {
-		echo '<hr /><p><b>$_REQUEST</b>:<br />'.spitio_prettify($_REQUEST).'</p>'.PHP_EOL;
+	if ($spitiooptions['request'] === '1') {
+		$showme .= '<hr /><p><b>$_REQUEST</b>:</p>'.spitio_prettify($_REQUEST).PHP_EOL;
 		}
 
 	if ($spitiooptions['files'] === '1') {
-		echo '<hr /><p><b>$_FILES</b>:<br />'.spitio_prettify($_FILES).'</p>'.PHP_EOL;
+		$showme .= '<hr /><p><b>$_FILES</b>:</p>'.spitio_prettify($_FILES).PHP_EOL;
 		}
 
-	if ($spitio_options['session'] === '1') {
-		echo '<hr /><p><b>$_SESSION</b>:<br />'.spitio_prettify($_SESSION).'</p>'.PHP_EOL;
+	if ($spitiooptions['session'] === '1') {
+		$showme .= '<hr /><p><b>$_SESSION</b>:</p>'.spitio_prettify($_SESSION).PHP_EOL;
 		}
 
 	if ($spitiooptions['error'] === '1') {
-		echo '<hr /><p><b>Last Error that Occurred - error_get_last()</b>:<br >'.spitio_prettify(error_get_last()).'</p>'.PHP_EOL;
+		$showme .= '<hr /><p><b>Last Error that Occurred - error_get_last()</b>:</p>'.spitio_prettify(error_get_last()).PHP_EOL;
 		}
+	return $showme;
 	}
 
 
@@ -181,7 +182,7 @@ function spitio_wp_foot(){
 	if(is_super_admin() && ($spitiooptions['active'] === '1')){
 
 		echo '<div class="spitio_box">'.PHP_EOL.'<h3>Developer Information</h3>'.PHP_EOL;
-		show_spitio_content($spitiooptions);
+		echo show_spitio_content($spitiooptions);
 		echo '</div>';
 		}
 	}
