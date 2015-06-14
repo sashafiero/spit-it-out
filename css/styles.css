@@ -1,4 +1,4 @@
-.blurtbox {
+.spitio_box {
 	position: fixed;
 	top: 60px;
 	left: 10px;
@@ -10,8 +10,10 @@
 	overflow: auto;
 	z-index: 900001;
 	box-shadow: 3px 3px 10px 0 rgba(0,0,0,.75);
+	width: 500px;
+	height: 300px;
 	}
-.closeblurtbox {
+.closespitio {
 	position: absolute;
 	top: 5px;
 	right: 5px;

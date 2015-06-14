@@ -5,9 +5,9 @@ jQuery(function($){
 	//jQuery Document Ready
 
 	// make blurtbox hideable
-	$('.blurtbox').append('<div class="closeblurtbox">( X )</div>');
-	$('.closeblurtbox').on('click', function(){
-		$('.blurtbox').hide();
+	$('.spitio_box').append('<div class="closespitio">( X )</div>');
+	$('.closespitio').on('click', function(){
+		$('.spitio_box').hide();
 		});
 
 

@@ -24,7 +24,7 @@ $save_as_option_name = 'spititout';
 global $spitio_option_list;
 $spitio_option_list = array(
 	array(
-		'description' => 'Spit It Out Active',
+		'description' => 'Spit It Out Overlay Active',
 		'db_name' => 'active',
 		'init' => '1'
 		),
@@ -137,48 +137,82 @@ function spitio_prettify($thingie) {
 
 
 
+
 /////////////////////////////////////////////////////////////////////
-// display the box!
+// this is a separate function, so it can be used both in the plugin's normal box,
+// or in a shortcode or template tag
+function show_spitio_content($spitiooptions){
+	if ($spitiooptions['templatefile'] === '1') {
+		echo '<hr /><p><b>Current Template File</b>: '.spitio_get_current_template().'</p>'.PHP_EOL;
+		}
+
+	if ($spitiooptions['currentquery'] === '1') {
+		echo '<hr /><p><b>Current Query</b>:<br />'.spitio_prettify(get_queried_object()).'<p>'.PHP_EOL;
+		}
+
+	if ($spitiooptions['server'] === '1') {
+		echo '<hr /><p><b>$_SERVER</b>:<br />'.spitio_prettify($_SERVER).'</p>'.PHP_EOL;
+		}
+
+	if ($spitio_options['request'] === '1') {
+		echo '<hr /><p><b>$_REQUEST</b>:<br />'.spitio_prettify($_REQUEST).'</p>'.PHP_EOL;
+		}
+
+	if ($spitiooptions['files'] === '1') {
+		echo '<hr /><p><b>$_FILES</b>:<br />'.spitio_prettify($_FILES).'</p>'.PHP_EOL;
+		}
+
+	if ($spitio_options['session'] === '1') {
+		echo '<hr /><p><b>$_SESSION</b>:<br />'.spitio_prettify($_SESSION).'</p>'.PHP_EOL;
+		}
+
+	if ($spitiooptions['error'] === '1') {
+		echo '<hr /><p><b>Last Error that Occurred - error_get_last()</b>:<br >'.spitio_prettify(error_get_last()).'</p>'.PHP_EOL;
+		}
+	}
+
+
+/////////////////////////////////////////////////////////////////////
+// display the box! (on top of every page of the site if user is admin)
 add_action('wp_footer', 'spitio_wp_foot');
 function spitio_wp_foot(){
 	$spitiooptions = get_option('spititout');
 
-	if(is_super_admin() && ($blurtoptions['active'] == '1')){
+	if(is_super_admin() && ($spitiooptions['active'] === '1')){
 
-		echo '<div class="spitio_box" style="width: 1000px; height: 700px;">'.PHP_EOL.'<h3>Developer Information</h3>'.PHP_EOL;
-
-		if ($spitiooptions['templatefile'] === '1') {
-			echo '<hr /><p><b>Current Template File</b>: '.blurtbox_get_current_template().'</p>'.PHP_EOL;
-			}
-
-		if ($spitiooptions['currentquery'] === '1') {
-			echo '<hr /><b>Current Query</b>:<br />'.bb_pretty(get_queried_object()).'<br />'.PHP_EOL;
-			}
-
-		if ($spitiooptions['server'] === '1') {
-			echo '<hr /><b>$_SERVER</b>:<br />'.bb_pretty($_SERVER).'<br />'.PHP_EOL;
-			}
-
-		if ($spitio_options['request'] === '1') {
-			echo '<r /><b>$_REQUEST</b>:<br />'.bb_pretty($_REQUEST).'<br />'.PHP_EOL;
-			}
-
-		if ($spitiooptions['files'] === '1') {
-			echo '<hr /><b>$_FILES</b>:<br />'.bb_pretty($_FILES).'<br />'.PHP_EOL;
-			}
-
-		if ($spitio_options['session'] === '1') {
-			echo '<r /><b>$_SESSION</b>:<br />'.bb_pretty($_SESSION).'<br />'.PHP_EOL;
-			}
-
-		if ($spitiooptions['error'] === '1') {
-			echo '<hr /><b>Last Error that Occurred - error_get_last()</b>:<br />'.bb_pretty(error_get_last()).'<br />'.PHP_EOL;
-			}
-
-
+		echo '<div class="spitio_box">'.PHP_EOL.'<h3>Developer Information</h3>'.PHP_EOL;
+		show_spitio_content($spitiooptions);
 		echo '</div>';
 		}
 	}
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+// shortcode for use in WYSIWYG content for displaying Spit It Out stuff
+// option to display if user is not a logged in admin; default to show only if admin.
+function spit_it_out($atts) {
+	$options = shortcode_atts( array(
+		'admin-only' => true
+		), $atts);
+
+	$spitiooptions = get_option('spititout');
+
+	if(is_super_admin() || // if the viewer is an admin... OR
+	!$options['admin-only']) { // if "admin-only" is false
+		return show_spitio_content($spitiooptions);
+		}
+
+
+
+	}
+add_shortcode('spit-it-out', 'spit_it_out');
+
+
+
 
 
 
@@ -247,9 +281,6 @@ function spitio_options() {
 	</div>
 <?php
 	}
-
-
-
 
 
 
