@@ -2,33 +2,10 @@
 /*
 Plugin Name: Spit It Out
 Description: Provides different ways to display various developer-useful information about the theme page
-Version:	 1.0
+Version:	 2.0
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
-
-/*
-The original behavior of this plugin is to show a box overlaid on top of everything
-with various bits of information that could be useful for developers.
-This displays only for logged in WP admin users.
-
-The WP admin can choose in the settings what bits of information to display
-(as well as whether or not to show it at all)
-
-
-There is a shortcode for use in WYSIWYG content
-The option is to display if user is not a logged in admin; default to show only if admin.
-[spit-it-out adminonly="true"] or "false"
-
-
-There is a function for use in templates.
-If you call it with show_spitio(false)
-it will show the stuff even if the viewer is not a logged in admin
-show_spitio($adminonly = true)
-
-*/
-
-
 
 // the options we want to offer
 // they will be stored in the database as an array under 'spititout' in the options table
@@ -49,7 +26,7 @@ $spitio_option_list = array(
 	array(
 		'description' => 'Spit It Out Overlay Active',
 		'db_name' => 'active',
-		'init' => '1'
+		'init' => '0'
 		),
 	array(
 		'description' => 'Current Template File Name',
