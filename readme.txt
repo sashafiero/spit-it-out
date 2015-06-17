@@ -27,13 +27,13 @@ And which bits of information you would like displayed.
 
 There is a shortcode for use in WYSIWYG content
 The option is to display if user is not a logged in admin; default to show only if admin.
-[spit-it-out adminonly="true"] or "false"
+[spititout] or [spititout adminonly="false"]
 
 
 There is a function for use in templates.
 If you call it with show_spitio(false)
 it will show the stuff even if the viewer is not a logged in admin
-show_spitio($adminonly = true)
+show_spitio() or show_spitio(false)
 
 
 

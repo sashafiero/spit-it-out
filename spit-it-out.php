@@ -292,6 +292,13 @@ function spitio_options() {
 			<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
 			</p>
 
+			<p>There is a shortcode for use in WYSIWYG content.<br />
+				The option is to display if user is not a logged in admin; default to show only if admin.<br />
+				[spititout] or [spititout adminonly="false"] </p>
+			<p>There is a function for use in templates.<br />
+				If you call it with show_spitio(false), it will show the stuff even if the viewer is not a logged in admin.<br />
+				show_spitio() or show_spitio(false)</p>
+
 		</form>
 	</div>
 <?php
