@@ -298,6 +298,8 @@ function spitio_options() {
 			<p>There is a function for use in templates.<br />
 				If you call it with show_spitio(false), it will show the stuff even if the viewer is not a logged in admin.<br />
 				show_spitio() or show_spitio(false)</p>
+			<p>You can also echo spitio_prettify($thingie) to pretty up things like arrays and objects so it's readable.</p>
+
 
 		</form>
 	</div>
