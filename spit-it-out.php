@@ -2,7 +2,7 @@
 /*
 Plugin Name: Spit It Out
 Description: Provides different ways to display various developer-useful information about the theme page
-Version:	 2.0
+Version:	 2.1
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );

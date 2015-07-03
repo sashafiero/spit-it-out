@@ -3,7 +3,7 @@ Contributors: sashafiero
 Tags: developers, development, query, error
 Description: Provides different ways to display various developer-useful information about the theme page.
 Tested up to: 4.2.2
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,9 @@ The overlay can ONLY be seen by logged in admin users.  The shortcode and templa
 
 
 == Changelog ==
+= 2.1 =
+* Fixed some variable names and global delcarations
+
 = 2.0 =
 * Added shortcode for use in WYSIWYG, and function for use in templates
 
@@ -77,5 +80,5 @@ The overlay can ONLY be seen by logged in admin users.  The shortcode and templa
 
 
 == Upgrade Notice ==
-= 2.0 =
-Adds shortcode and function for use in content or template development
+= 2.1 =
+Fixed some variable names and global delcarations. Important!
