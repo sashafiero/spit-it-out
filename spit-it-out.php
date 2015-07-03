@@ -18,8 +18,8 @@ array (
 	)
 
 */
-global $save_as_option_name; // the `option_name` field in the `wp_options` table
-$save_as_option_name = 'spititout';
+global $spittio_save_as; // the `option_name` field in the `wp_options` table
+$spittio_save_as = 'spititout';
 
 global $spitio_option_list;
 $spitio_option_list = array(
@@ -87,7 +87,7 @@ add_action( 'wp_enqueue_scripts', 'spitio_styles' );
 /////////////////////////////////////////////////////////////////////
 // activation tasks
 function spitio_activate() {
-	global $spitio_option_list, $save_as_option_name;
+	global $spitio_option_list, $spittio_save_as;
 
 	$init_options = array();
 
@@ -95,7 +95,7 @@ function spitio_activate() {
 		$init_options[$option['db_name']] = $option['init'];
 		}
 
-	add_option($save_as_option_name, $init_options);
+	add_option($spittio_save_as, $init_options);
 	}
 register_activation_hook( __FILE__, 'spitio_activate' );
 
@@ -177,7 +177,7 @@ function show_spitio_content($spitiooptions){
 // display the box! (on top of every page of the site if user is admin)
 add_action('wp_footer', 'spitio_wp_foot');
 function spitio_wp_foot(){
-	$spitiooptions = get_option('spititout');
+	$spitiooptions = get_option($spittio_save_as);
 
 	if(is_super_admin() && ($spitiooptions['active'] === '1')){
 
@@ -196,7 +196,7 @@ function spitio_wp_foot(){
 // function for use in templates. if you call it with show_spitio(false)
 // it will show the stuff even if the viewer is not a logged in admin
 function show_spitio($adminonly = true) {
-	$spitiooptions = get_option('spititout');
+	$spitiooptions = get_option($spittio_save_as);
 	if(is_super_admin() || $adminonly === false){
 		echo show_spitio_content($spitiooptions);
 		}
@@ -215,7 +215,7 @@ function spit_it_out($atts, $content = null) {
 		'adminonly' => 'true'
 		), $atts);
 
-	$spitiooptions = get_option('spititout');
+	$spitiooptions = get_option($spittio_save_as);
 
 	if(is_super_admin() || // if the viewer is an admin... OR
 	($options['adminonly'] === 'false')) { // if "admin-only" is false
@@ -240,14 +240,14 @@ function admin_spitio() {
 
 function spitio_options() {
 	// variables for the field and option names
-	global $spitio_option_list, $save_as_option_name;
+	global $spitio_option_list, $spittio_save_as;
 
 
 	$hidden_field_name = 'spitio_submit_hidden';
 
 
 	// Read in existing option value from database
-	$spitio_options = get_option($save_as_option_name);
+	$spitio_options = get_option($spittio_save_as);
 
 
 	// See if the user has posted us some information
@@ -259,7 +259,7 @@ function spitio_options() {
 			}
 
 		// Save the posted value in the database
-		update_option($save_as_option_name, $spitio_options);
+		update_option($spittio_save_as, $spitio_options);
 
 		// Put a "settings saved" message on the screen
 		echo '<div class="updated"><p><strong>Settings saved.</strong></p></div>';
@@ -295,9 +295,9 @@ function spitio_options() {
 				The option is to display if user is not a logged in admin; default to show only if admin.<br />
 				[spititout] or [spititout adminonly="false"] </p>
 			<p>There is a function for use in templates.<br />
-				If you call it with show_spitio(false), it will show the stuff even if the viewer is not a logged in admin.<br />
-				show_spitio() or show_spitio(false)</p>
-			<p>You can also echo spitio_prettify($thingie) to pretty up things like arrays and objects so it's readable.</p>
+				If you call it with <pre>echo show_spitio(false);</pre>, it will show the stuff even if the viewer is not a logged in admin.<br />
+				<pre>echo show_spitio()</pre> or <pre>echo show_spitio(false)</pre></p>
+			<p>You can also <pre>echo spitio_prettify($thingie);</pre> to pretty up things like arrays and objects so they're human readable.</p>
 
 
 		</form>
