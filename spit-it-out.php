@@ -87,8 +87,7 @@ add_action( 'wp_enqueue_scripts', 'spitio_styles' );
 /////////////////////////////////////////////////////////////////////
 // activation tasks
 function spitio_activate() {
-	global $spitio_option_list;
-	global $save_as_option_name;
+	global $spitio_option_list, $save_as_option_name;
 
 	$init_options = array();
 
