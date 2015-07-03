@@ -77,7 +77,6 @@ add_action( 'wp_enqueue_scripts', 'spitio_scripts_important', 10 );
 
 // load in styles
 function spitio_styles() {
-	// Register the style like this for a plugin:
 	wp_register_style( 'spitio-css', plugins_url( '/css/styles.css', __FILE__ ) );
 	wp_enqueue_style( 'spitio-css' );
 	}
