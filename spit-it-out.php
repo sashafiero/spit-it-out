@@ -177,6 +177,7 @@ function show_spitio_content($spitiooptions){
 // display the box! (on top of every page of the site if user is admin)
 add_action('wp_footer', 'spitio_wp_foot');
 function spitio_wp_foot(){
+	global $spittio_save_as;
 	$spitiooptions = get_option($spittio_save_as);
 
 	if(is_super_admin() && ($spitiooptions['active'] === '1')){
@@ -196,6 +197,7 @@ function spitio_wp_foot(){
 // function for use in templates. if you call it with show_spitio(false)
 // it will show the stuff even if the viewer is not a logged in admin
 function show_spitio($adminonly = true) {
+	global $spittio_save_as;
 	$spitiooptions = get_option($spittio_save_as);
 	if(is_super_admin() || $adminonly === false){
 		echo show_spitio_content($spitiooptions);
@@ -211,6 +213,7 @@ function show_spitio($adminonly = true) {
 // option to display if user is not a logged in admin; default to show only if admin.
 // [spit-it-out adminonly="true"] or "false"
 function spit_it_out($atts, $content = null) {
+	global $spittio_save_as;
 	$options = shortcode_atts( array(
 		'adminonly' => 'true'
 		), $atts);
