@@ -14,9 +14,9 @@
 	height: 300px;
 	}
 .closespitio {
-	position: absolute;
-	top: 5px;
-	right: 5px;
+	position: fixed;
+	top: 65px;
+	left: 15px;
 	color: red;
 	cursor: pointer;
 	}
