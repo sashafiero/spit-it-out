@@ -71,7 +71,7 @@ The overlay can ONLY be seen by logged in admin users.  The shortcode and templa
 * Added link to Settings in the Plugins list page
 
 = 2.0.1 =
-* Fixed some variable names and global delcarations
+* Fixed some variable names and global declarations
 
 = 2.0 =
 * Added shortcode for use in WYSIWYG, and function for use in templates
@@ -85,4 +85,4 @@ The overlay can ONLY be seen by logged in admin users.  The shortcode and templa
 
 == Upgrade Notice ==
 = 2.0.1 =
-Fixed some variable names and global delcarations. Important!
+Fixed some variable names and global declarations. Important!
