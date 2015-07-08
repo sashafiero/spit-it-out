@@ -2,7 +2,7 @@
 /*
 Plugin Name: Spit It Out
 Description: Provides different ways to display various developer-useful information about the theme page
-Version:	 2.2
+Version:	 2.1
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
@@ -98,6 +98,31 @@ function spitio_activate() {
 	add_option($spittio_save_as, $init_options);
 	}
 register_activation_hook( __FILE__, 'spitio_activate' );
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+// add a "Settings" link in the Spit It Out entry in the Plugin list
+add_filter('plugin_action_links', 'spitio_plugin_action_links', 10, 2);
+
+function spitio_plugin_action_links($links, $file) {
+	static $this_plugin;
+
+	if (!$this_plugin) {
+		$this_plugin = plugin_basename(__FILE__);
+	}
+
+	if ($file == $this_plugin) {
+		$settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=spit-it-out">Settings</a>';
+		array_unshift($links, $settings_link);
+	}
+
+	return $links;
+}
+
+
 
 
 
