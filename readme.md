@@ -1,9 +1,9 @@
 === Spit It Out ===
-Contributors: sashafiero
+Contributors: Christy.pw
 Tags: developers, development, query, error
 Description: Provides different ways to display various developer-useful information about the theme page.
 Tested up to: 4.2.2
-Stable tag: 2.2
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

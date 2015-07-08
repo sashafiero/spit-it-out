@@ -3,6 +3,9 @@
 Plugin Name: Spit It Out
 Description: Provides different ways to display various developer-useful information about the theme page
 Version:	 2.1
+Author: Christy.pw
+Author URI: http://christy.pw
+Plugin URI: http://christy.pw/web-mobile/wordpress-plugins/spit-it-out/
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
