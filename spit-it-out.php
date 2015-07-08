@@ -2,7 +2,7 @@
 /*
 Plugin Name: Spit It Out
 Description: Provides different ways to display various developer-useful information about the theme page
-Version:	 2.1
+Version:	 2.2
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
@@ -182,8 +182,10 @@ function spitio_wp_foot(){
 
 	if(is_super_admin() && ($spitiooptions['active'] === '1')){
 
-		echo '<div class="spitio_box">'.PHP_EOL;
-		echo show_spitio_content($spitiooptions);
+		echo '<div id="spitio_box" class="closed">'.PHP_EOL;
+		echo show_spitio_content($spitiooptions).PHP_EOL;
+		//echo '<div class="closespitio">&#8855;</div>'.PHP_EOL;
+		echo '<img id="spitio_badge" src="'.plugins_url( '/spitio-badge.png', __FILE__ ).'" />'.PHP_EOL;
 		echo '</div>';
 		}
 	}
@@ -272,7 +274,7 @@ function spitio_options() {
 
 
 	<div class="wrap">
-		<h2>Spit It Out Options</h2>
+		<h2><img id="spitio_badge" src="<?=plugins_url( '/spitio-badge.png', __FILE__ )?>" /> Spit It Out Options</h2>
 		<form name="spitio_options" method="post" action="">
 			<input type="hidden" name="<?=$hidden_field_name?>" value="Y">
 

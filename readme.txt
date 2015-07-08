@@ -3,7 +3,7 @@ Contributors: sashafiero
 Tags: developers, development, query, error
 Description: Provides different ways to display various developer-useful information about the theme page.
 Tested up to: 4.2.2
-Stable tag: 2.1
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,8 +43,6 @@ In the future, I would like to provide options for the following items.
 • Whether to give back the result by just spitting it out in the box, or by json, or perhaps something else
 • Specific bits of $_SERVER so you don't have to get a dump of the whole thing
 
-I would also like to instead of hide()ing the box when clicking the X, make it minimized and accessible by a little icon off to the side or something like that.
-
 Maybe offer the option to put a display toggling icon in the WP admin bar at the top of the site for logged in admins.
 
 
@@ -63,9 +61,14 @@ The overlay can ONLY be seen by logged in admin users.  The shortcode and templa
 == Screenshots ==
 1. Options for displaying overlay and what information to show
 2. The overlay box
+3. The overlay box slid closed
 
 
 == Changelog ==
+= 2.2 =
+* Changed overlay to slide out from the left side, defaulting to closed, with an icon for toggling open/closed
+* Updated the screenshots & added #3
+
 = 2.1 =
 * Fixed some variable names and global delcarations
 
