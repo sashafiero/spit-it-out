@@ -52,7 +52,7 @@ In the future, I would like to provide options for the following items.
 
 
 ## Frequently Asked Questions
-### Can just anyone see the information displayed?
+#### Can just anyone see the information displayed?
 The overlay can ONLY be seen by logged in admin users.  The shortcode and template tag offer options for displaying to non-admin viewers, but default to admin visibility only.
 
 
