@@ -42,6 +42,11 @@ $spitio_option_list = array(
 		'init' => '1'
 		),
 	array(
+		'description' => '$wp_rewrite->rules',
+		'db_name' => 'rewriterules',
+		'init' => '1'
+		),
+	array(
 		'description' => '$_SERVER',
 		'db_name' => 'server',
 		'init' => '0'
@@ -74,6 +79,9 @@ $spitio_option_list = array(
 // load in js
 function spitio_scripts_important() {
 	wp_register_script( 'spitio-js', plugins_url( '/js/scripts.js', __FILE__ ), array( 'jquery' ) );
+	//wp_enqueue_script('jquery-ui-core');
+	//wp_enqueue_script('jquery-ui-draggable');
+	//wp_enqueue_script('jquery-ui-resizable');
 	wp_enqueue_script( 'spitio-js' );
 	}
 add_action( 'wp_enqueue_scripts', 'spitio_scripts_important', 10 );
@@ -174,6 +182,11 @@ function show_spitio_content($spitiooptions){
 		echo '<hr /><p><b>Current Query</b>:</p>'.spitio_prettify(get_queried_object()).PHP_EOL;
 		}
 
+	if ($spitiooptions['rewriterules'] === '1') {
+		global $wp_rewrite;
+		echo '<hr /><p><b>WP Rewrite Rules</b>:</p>'.spitio_prettify($wp_rewrite->rules).PHP_EOL;
+		}
+
 	if ($spitiooptions['server'] === '1') {
 		echo '<hr /><p><b>$_SERVER</b>:</p>'.spitio_prettify($_SERVER).PHP_EOL;
 		}
@@ -210,9 +223,10 @@ function spitio_wp_foot(){
 
 	if(is_super_admin() && ($spitiooptions['active'] === '1')){
 
-		echo '<div id="spitio_box" class="closed">'.PHP_EOL;
+		echo '<div id="spitio_box" class="closed"><div id="spitio_content">'.PHP_EOL;
 		echo show_spitio_content($spitiooptions).PHP_EOL;
 		//echo '<div class="closespitio">&#8855;</div>'.PHP_EOL;
+		echo '</div>'.PHP_EOL;
 		echo '<img id="spitio_badge" src="'.plugins_url( '/spitio-badge.png', __FILE__ ).'" />'.PHP_EOL;
 		echo '</div>';
 		}
