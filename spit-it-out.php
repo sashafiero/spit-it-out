@@ -227,7 +227,7 @@ function spitio_wp_foot(){
 		echo show_spitio_content($spitiooptions).PHP_EOL;
 		//echo '<div class="closespitio">&#8855;</div>'.PHP_EOL;
 		echo '</div>'.PHP_EOL;
-		echo '<img id="spitio_badge" src="'.plugins_url( '/spitio-badge.png', __FILE__ ).'" alt="Spit It Out" />'.PHP_EOL;
+		echo '<img id="spitio_badge" alt="Spit It Out" src="'.plugins_url( '/spitio-badge.png', __FILE__ ).'" alt="Spit It Out" />'.PHP_EOL;
 		echo '</div>';
 		}
 	}
@@ -316,7 +316,7 @@ function spitio_options() {
 
 
 	<div class="wrap">
-		<h2><img id="spitio_badge" src="<?=plugins_url( '/spitio-badge.png', __FILE__ )?>" /> Spit It Out Options</h2>
+		<h2><img id="spitio_badge" src="<?=plugins_url( '/spitio-badge.png', __FILE__ )?>" alt="Spit It Out" /> Spit It Out Options</h2>
 		<form name="spitio_options" method="post" action="">
 			<input type="hidden" name="<?=$hidden_field_name?>" value="Y">
 
