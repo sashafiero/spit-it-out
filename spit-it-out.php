@@ -227,7 +227,7 @@ function spitio_wp_foot(){
 		echo show_spitio_content($spitiooptions).PHP_EOL;
 		//echo '<div class="closespitio">&#8855;</div>'.PHP_EOL;
 		echo '</div>'.PHP_EOL;
-		echo '<img id="spitio_badge" src="'.plugins_url( '/spitio-badge.png', __FILE__ ).'" />'.PHP_EOL;
+		echo '<img id="spitio_badge" src="'.plugins_url( '/spitio-badge.png', __FILE__ ).'" alt="Spit It Out" />'.PHP_EOL;
 		echo '</div>';
 		}
 	}
