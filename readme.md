@@ -46,7 +46,7 @@ In the future, I would like to provide options for the following items.
 
 
 ## Installation
-1. Upload the `spit-it-out` folder to the `/wp-content/plugins/' directory
+1. Upload the `spit-it-out` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to Settings > Spit It Out to choose your displayed information and turn on the overlay, if desired.
 
