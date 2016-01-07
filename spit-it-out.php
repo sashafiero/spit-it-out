@@ -2,7 +2,7 @@
 /*
 Plugin Name: Spit It Out
 Description: Provides different ways to display various developer-useful information about the theme page
-Version:	 2.1.1
+Version:	 2.1.2
 Author: Christy.pw
 Author URI: http://christy.pw
 Plugin URI: http://christy.pw/web-mobile/wordpress-plugins/spit-it-out/
@@ -304,6 +304,9 @@ function spitio_options() {
 		foreach($spitio_option_list as $option) {
 			if(isset($_POST[$option['db_name']])) {
 				$spitio_options[$option['db_name']] = $_POST[$option['db_name']];
+				}
+			else {
+				$spitio_options[$option['db_name']] = "0";
 				}
 			}
 

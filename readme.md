@@ -3,7 +3,7 @@ Contributors: Christy.pw
 Tags: developers, development, query, error
 Description: Provides different ways to display various developer-useful information about the theme page.
 Tested up to: 4.4
-Stable tag: 2.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ The overlay can ONLY be seen by logged in admin users.  The shortcode and templa
 
 
 ## Changelog
+### 2.1.2
+* Fixed a bug introduced by previous update. Unchecking options did not actually remove them from the settings.
+
 ### 2.1.1
 * Fixed some error barfing by checking for isset() before using it
 * Tested against WP 4.4
@@ -88,5 +91,5 @@ The overlay can ONLY be seen by logged in admin users.  The shortcode and templa
 
 
 ## Upgrade Notice
-### 2.0.1 - 2.1.1
+### 2.0.1 - 2.1.2
 Fixed some variable names and global declarations. 2.0.1 is important!  Also some aesthetic things and an addition of an item to optionally display.
