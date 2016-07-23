@@ -2,13 +2,27 @@
 /*
 Plugin Name: Spit It Out
 Description: Provides different ways to display various developer-useful information about the theme page
-Version:	 2.1.2
+Version:	 2.2
 Author: Christy.pw
 Author URI: http://christy.pw
 Plugin URI: http://christy.pw/web-mobile/wordpress-plugins/spit-it-out/
 */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
+
+
+
+/////////////////////////////////////////////////////////////////////
+//region updater service
+require 'plugin-updates/plugin-update-checker.php';
+$ExampleUpdateChecker = PucFactory::buildUpdateChecker(
+    'http://wpplugs.stellarstudios.net/spit-it-out/info.json',
+    __FILE__
+);
+//endregion
+
+
+
 
 // the options we want to offer
 // they will be stored in the database as an array under 'spititout' in the options table
@@ -76,7 +90,7 @@ $spitio_option_list = array(
 
 
 /////////////////////////////////////////////////////////////////////
-// load in js
+//region load in js & styles
 function spitio_scripts_important() {
 	wp_register_script( 'spitio-js', plugins_url( '/js/scripts.js', __FILE__ ), array( 'jquery' ) );
 	//wp_enqueue_script('jquery-ui-core');
@@ -86,17 +100,16 @@ function spitio_scripts_important() {
 	}
 add_action( 'wp_enqueue_scripts', 'spitio_scripts_important', 10 );
 
-// load in styles
 function spitio_styles() {
 	wp_register_style( 'spitio-css', plugins_url( '/css/styles.css', __FILE__ ) );
 	wp_enqueue_style( 'spitio-css' );
 	}
 add_action( 'wp_enqueue_scripts', 'spitio_styles' );
-
+//endregion
 
 
 /////////////////////////////////////////////////////////////////////
-// activation tasks
+//region activation tasks
 function spitio_activate() {
 	global $spitio_option_list, $spittio_save_as;
 
@@ -109,13 +122,13 @@ function spitio_activate() {
 	add_option($spittio_save_as, $init_options);
 	}
 register_activation_hook( __FILE__, 'spitio_activate' );
-
+//endregion
 
 
 
 
 /////////////////////////////////////////////////////////////////////
-// add a "Settings" link in the Spit It Out entry in the Plugin list
+//region add a "Settings" link in the Spit It Out entry in the Plugin list
 add_filter('plugin_action_links', 'spitio_plugin_action_links', 10, 2);
 
 function spitio_plugin_action_links($links, $file) {
@@ -132,7 +145,7 @@ function spitio_plugin_action_links($links, $file) {
 
 	return $links;
 }
-
+//endregion
 
 
 
@@ -142,7 +155,7 @@ function spitio_plugin_action_links($links, $file) {
 
 
 //////////////////////////////////
-// Get current page template name
+//region Get current page template name
 add_filter( 'template_include', 'spitio_var_template_include', 1000 );
 function spitio_var_template_include( $t ){
 	$GLOBALS['spitio_current_theme_template'] = basename($t);
@@ -153,23 +166,24 @@ function spitio_get_current_template() {
 		return false;
 	return $GLOBALS['spitio_current_theme_template'];
 	}
+//endregion
 
 
 
 /////////////////////////////////////////////////////////////////////
-// pretty up things like arrays and objects so it's readable
+//region spitio_prettify - pretty up things like arrays and objects so it's readable
 function spitio_prettify($thingie) {
 	$pretty_thing = '<pre>';
 	$pretty_thing .= htmlentities(var_export($thingie, true));
 	$pretty_thing .= '</pre>';
 	return $pretty_thing;
 	}
-
+//endregion
 
 
 
 /////////////////////////////////////////////////////////////////////
-// this is a separate function, so it can be used in the plugin's normal overlay box,
+//region separate function, so it can be used in the plugin's normal overlay box,
 // or in a shortcode or template tag
 function show_spitio_content($spitiooptions){
 	ob_start();
@@ -208,14 +222,14 @@ function show_spitio_content($spitiooptions){
 		}
 	return ob_get_clean();
 	}
-
+//endregion
 
 
 
 
 
 /////////////////////////////////////////////////////////////////////
-// display the box! (on top of every page of the site if user is admin)
+//region display the box! (on top of every page of the site if user is admin)
 add_action('wp_footer', 'spitio_wp_foot');
 function spitio_wp_foot(){
 	global $spittio_save_as;
@@ -231,14 +245,14 @@ function spitio_wp_foot(){
 		echo '</div>';
 		}
 	}
-
+//endregion
 
 
 
 
 
 /////////////////////////////////////////////////////////////////////
-// function for use in templates. if you call it with show_spitio(false)
+//region function for use in templates. if you call it with show_spitio(false)
 // it will show the stuff even if the viewer is not a logged in admin
 function show_spitio($adminonly = true) {
 	global $spittio_save_as;
@@ -247,13 +261,13 @@ function show_spitio($adminonly = true) {
 		echo show_spitio_content($spitiooptions);
 		}
 	}
-
+//endregion
 
 
 
 
 /////////////////////////////////////////////////////////////////////
-// shortcode for use in WYSIWYG content for displaying Spit It Out stuff
+//region shortcode for use in WYSIWYG content for displaying Spit It Out stuff
 // option to display if user is not a logged in admin; default to show only if admin.
 // [spit-it-out adminonly="true"] or "false"
 function spit_it_out($atts, $content = null) {
@@ -271,14 +285,14 @@ function spit_it_out($atts, $content = null) {
 	return false;
 	}
 add_shortcode('spititout', 'spit_it_out');
-
+//endregion
 
 
 
 
 
 /////////////////////////////////////////////////////////////////////
-// WP Admin page to control options
+//region WP Admin page to control options
 add_action( 'admin_menu', 'admin_spitio' );
 function admin_spitio() {
 	add_options_page( 'Spit It Out Options', 'Spit It Out', 'manage_options', 'spit-it-out', 'spitio_options' );
@@ -291,7 +305,6 @@ function spitio_options() {
 
 
 	$hidden_field_name = 'spitio_submit_hidden';
-
 
 	// Read in existing option value from database
 	$spitio_options = get_option($spittio_save_as);
@@ -315,11 +328,10 @@ function spitio_options() {
 
 		// Put a "settings saved" message on the screen
 		echo '<div class="updated"><p><strong>Settings saved.</strong></p></div>';
-
 		}
+
+		//region settings page output
 	?>
-
-
 	<div class="wrap">
 		<h2><img id="spitio_badge" src="<?=plugins_url( '/spitio-badge.png', __FILE__ )?>" alt="Spit It Out" /> Spit It Out Options</h2>
 		<form name="spitio_options" method="post" action="">
@@ -332,11 +344,8 @@ function spitio_options() {
 				<input name="<?=$option['db_name']?>" type="checkbox" value="1" <?php if ($spitio_options[$option['db_name']] === '1') { echo ' checked="checked"'; } ?> />
 				&nbsp; <?=$option['description']?>
 				</p>
-
-
 				<?php
 				}
-
 			?>
 
 			<p class="submit">
@@ -350,13 +359,12 @@ function spitio_options() {
 				If you call it with <pre>echo show_spitio(false);</pre>, it will show the stuff even if the viewer is not a logged in admin.<br />
 				<pre>echo show_spitio()</pre> or <pre>echo show_spitio(false)</pre></p>
 			<p>You can also <pre>echo spitio_prettify($thingie);</pre> to pretty up things like arrays and objects so they're human readable.</p>
-
-
 		</form>
 	</div>
 <?php
+    //endregion
 	}
-
+//endregion
 
 
 
